@@ -4,7 +4,7 @@ Seminario Gráfica Computacional I 2018, Primer Semestre → Clase 4 → Viernes
 
 ### Visualización de datos
 
-Segunda clase de ITERACIÓN 2 → HTML5, CSS3 y JavaScript + JSON y GeoJSON + SVG v/s CANVAS + D3.JS → Se evalúa el viernes 20 de abril.
+En [la clase recién pasada](https://github.com/profesorfaco/dgp502_3/), abrimos la segunda iteración. Revisamos las etiquetas CANVAS y SVG, y conocimos D3.JS, una biblioteca de JavaScript para producir, a partir de datos, visualizaciones dinámicas e interactivas en SVG.
 
 - - - - 
 
