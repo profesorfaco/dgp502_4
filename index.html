@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="es">
 <head>
@@ -12,7 +13,7 @@
         <div class="container">
           <div class="row">
             <div class="col-sm-10 col-md-7 py-4">
-              <p>D3.js (Data-Driven Documents) es una biblioteca de JavaScript que simplifica el trabajo con los datos para su visualización en documentos web, usando HTML, CSS y SVG.</p>
+              <p><a href="https://d3js.org/" title="D3.js - Data-Driven Documents" target="_blank">D3.js</a> es una biblioteca de JavaScript que permite la manipulación eficiente de documentos basados en datos. Además, permite diseñar la interfaz visual más adecuada para la presentación de tales datos, usando HTML, CSS y <a href="https://developer.mozilla.org/es/docs/Web/SVG" target="_blank" title="SVG | MDN">SVG</a>.</p>
             </div>
             <div class="col-sm-4 offset-md-1 py-4">
               <ul class="list-unstyled">
@@ -42,7 +43,7 @@
         <h1>D3.js + JSON</h1>
       </div>
       <div class="col-md-12 pt-2">
-      <p>La clase recién pasada les mostré un sitio web que ofrece, a través de una <a href="https://es.wikipedia.org/wiki/Interfaz_de_programaci%C3%B3n_de_aplicaciones">API</a>, datos económicos nacionales y acualizados. Para consultar por tales datos, basta con pedir <code>https://mindicador.cl/api/{lo que necesiten}</code>. Y lo que necesiten debería estar limitado a las siguientes opciones: <code>uf, ivp, dolar, dolar_intercambio, euro, ipc, utm, imacec, tpm, libra_cobre, tasa_desempleo, bitcoin</code></p>
+      <p>La clase recién pasada les mostré un sitio web que ofrece, a través de una <a href="https://es.wikipedia.org/wiki/Interfaz_de_programaci%C3%B3n_de_aplicaciones">API</a>, datos económicos nacionales y actualizados. Para consultar por tales datos, basta con pedir <code>https://mindicador.cl/api/{lo que necesiten}</code>. Y lo que necesiten debería estar limitado a las siguientes opciones: <code>uf, ivp, dolar, dolar_intercambio, euro, ipc, utm, imacec, tpm, libra_cobre, tasa_desempleo, bitcoin</code></p>
       <p>Si consulto <code> https://mindicador.cl/api/dolar</code>, obtengo como respuesta un json con la siguiente estructura:</p>
 <pre>
 <code>
@@ -56,10 +57,10 @@
 }
 </code>
 </pre>
-<p>Con D3.js, puedo ir por ese JSON y asignar sus valores a una variable.</p>
+<p>Usando D3.js, puedo ir por ese JSON y comenzar a trabajar con los 31 ítems dentro de serie.</p>
 <btn class="btn btn-success mb-3" onClick="waddiwasi()">presiona el botón, <strong>una vez</strong></btn>
+<ul id="aqui" class="list-unstyled"></ul>
 <p><span id="max"></span><span id="min"></span></p>
-<ul id="aqui"></ul>
 </div>
 </div>
 </div>
@@ -67,24 +68,17 @@
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script>
 function waddiwasi(){
-  //voy a buscar el indicador
   d3.json("https://mindicador.cl/api/dolar").then(function(data) {
-    //dentro del indicador, que es un objeto, necesito de un arreglo particular
     var precios = d3.values(data.serie);
-    //programao el despliegue de la información en pantalla
-    d3.select("#aqui")
-    .selectAll("li")
-    .data(precios)
-    .enter()
-    .append("li")
-    .text(function(d) { return "El " + d.fecha.substr(0, d.fecha.indexOf('T')) + " el dolar costaba $" + d.valor});
-    //d3.max me entrega el mayor valor dentro de un arreglo
+    console.log(precios);
+    //Selecciono el elemento de identidad "aqui", luego todos los li que serán creados dentro suyo
+    d3.select("#aqui").selectAll("li").data(precios).enter().append("li").text(function(d) { return d.fecha.substr(0, d.fecha.indexOf('T')) + " → $" + d.valor});
+    //Busco el máximo valor en la serie
     d3.select("#max").data(precios).text(d3.max(precios.map(function(d){return "En el último mes, el dólar más caro costó $" + d.valor+ " (" + d.fecha.substr(0, d.fecha.indexOf('T')) + ")";})))
-    //d3.max me entrega el menor valor dentro de un arreglo
+    //Busco el menor valor en la serie
     d3.select("#min").data(precios).text(d3.min(precios.map(function(d){return ", mientras que el más barato costó $" + d.valor+ " (" + d.fecha.substr(0, d.fecha.indexOf('T')) + ")";})))
-  })//acá estoy cerrando la consulta por el JSON
-}//acá estoy cerrando la función waddiwasi()
-
+  })
+}
 </script>
 <!-- jQuery primero, luego Popper.js, y finalmente Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
